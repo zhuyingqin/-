@@ -7,8 +7,9 @@
 #
 #     http://doc.scrapy.org/en/latest/topics/settings.html
 #     http://scrapy.readthedocs.org/en/latest/topics/downloader-middleware.html
-#     http://scrapy.readthedocs.org/en/latest/topics/spider-middleware.html
+#     http://scrapy.readthedocs.org/en/latest/topics/
 
+from scrapy.exporters import JsonLinesItemExporter  
 BOT_NAME = 'sinamicroblog'
 
 SPIDER_MODULES = ['sinamicroblog.spiders']
@@ -19,7 +20,7 @@ NEWSPIDER_MODULE = 'sinamicroblog.spiders'
 #USER_AGENT = 'sinamicroblog (+http://www.yourdomain.com)'
 
 # Obey robots.txt rules
-ROBOTSTXT_OBEY = True
+ROBOTSTXT_OBEY = False
 
 # Configure maximum concurrent requests performed by Scrapy (default: 16)
 #CONCURRENT_REQUESTS = 32
@@ -88,3 +89,21 @@ ROBOTSTXT_OBEY = True
 #HTTPCACHE_DIR = 'httpcache'
 #HTTPCACHE_IGNORE_HTTP_CODES = []
 #HTTPCACHE_STORAGE = 'scrapy.extensions.httpcache.FilesystemCacheStorage'
+COOKIE = {'SUHB': '0qj0GyBaa4oECt', 
+    'SCF': 'AirodfBgSquakOha_rXoDhXFUYr21z_5Na6J8ZTii_BUan67TnoSu-j0YpUILr6f6FQL1d3oXihiDZAksnVcElw.',
+    '_T_WM': '4e014bc25d77b3039d1aa50a3e5435f6', 
+    'ALF': '1511441541', 'SSOLoginState': '1508851177', 
+    'SUBP': '0033WrSXqPxfM725Ws9jqgMF55529P9D9W5cK4i1qIRQd1Jw0mpUv85J5JpX5K-hUgL.Foe7S05Xe0epShM2dJLoIEBLxKMLB.BL1KMLxKqL1-zLB.eLxKnLB.qLB-2LxKBLB.2L1-2t',
+    'SUB': '_2A2506025DeRhGeVO7FIV8y3NzzuIHXVUFFPxrDV6PUJbktAKLVXGkW2Sseyf62wo2H-LPBLYwQo-iKWI4A..'
+    }
+
+class CustomJsonLinesItemExporter(JsonLinesItemExporter):  
+    def __init__(self, file, **kwargs):  
+        super(CustomJsonLinesItemExporter, self).__init__(file, ensure_ascii=False, **kwargs)
+
+#这里只需要将超类的ensure_ascii属性设置为False即可
+#同时要在setting文件中启用新的Exporter类
+
+FEED_EXPORTERS = {  
+    'json': 'sinamicroblog.settings.CustomJsonLinesItemExporter',  
+}  
