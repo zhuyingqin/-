@@ -11,12 +11,13 @@ from scrapy.conf import settings
 2.http://blog.csdn.net/qq_30242609/article/details/54581674 //Scrapy请求头文件教程
 3.http://blog.csdn.net/qq_30242609/article/details/54581674 //Scrapy shell 如何cookies,headers请求
 4.http://blog.csdn.net/peihaozhu/article/details/53022236   //Scrapy中关于Export Unicode字符集问题解决
+5.https://github.com/wly2014/ImageSpider/blob/master/ImgInWebsite/spiders/ImgSpider.py //scrapy迭代爬取
 """
 
 class Spider(CrawlSpider):
     name = "sinaSpider"
     host = "http://weibo.cn"
-    start_urls = [3070433147]
+    start_urls = [5601402881,]
     headers = {
     'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_12_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/62.0.3202.62 Safari/537.36',
     'Connection': 'keep-alive',
@@ -77,18 +78,23 @@ class Spider(CrawlSpider):
         '丽华Joanna', '移除', '也关注她', '私信']
         """
         count=0
+        for IDS in selector.xpath('//td/a/@href').extract():
+            IDS = re.findall('uid=(\d+)', IDS)
+            if IDS:
+                ID = int(IDS[0])
+                if ID not in self.finish_ID:
+                    self.scrawl_ID.add(ID)
         for elem in text2:
-            # fans = FansItem()
-            # elem = re.findall('uid=(\d+)', elem)
-            # if elem:
-            
-            if count%4==0 and count<len(text2):
+            #response.meta["result"].append(elem)
+            if count%2==0 and count<len(text2):
                 response.meta["result"].append(text2[count])
                 count+= 1
             # ID = int(elem[0])
                 # if ID not in self.finish_ID:  # 新的ID，如果未爬则加入待爬队列
                 #     self.scrawl_ID.add(ID)
             count+= 1
+
+
         url_next = selector.xpath(
             'body//div[@id="pagelist"]/form/div/a[text()="\u4e0b\u9875"]/@href').extract()
         
@@ -97,5 +103,3 @@ class Spider(CrawlSpider):
                           callback=self.parse3)
         else:  # 如果没有下一页即获取完毕
             yield items
-
-
