@@ -7,11 +7,13 @@ from sinamicroblog.items import FansItem
 from scrapy.conf import settings
 """
 参考网址
-1.http://blog.csdn.net/qq_30242609/article/details/52822190 //Scrapy定向爬虫教程(五)——保持登陆状态
-2.http://blog.csdn.net/qq_30242609/article/details/54581674 //Scrapy请求头文件教程
-3.http://blog.csdn.net/qq_30242609/article/details/54581674 //Scrapy shell 如何cookies,headers请求
-4.http://blog.csdn.net/peihaozhu/article/details/53022236   //Scrapy中关于Export Unicode字符集问题解决
-5.https://github.com/wly2014/ImageSpider/blob/master/ImgInWebsite/spiders/ImgSpider.py //scrapy迭代
+1.http://blog.csdn.net/qq_30242609/article/details/52822190 // Scrapy定向爬虫教程(五)——保持登陆状态
+2.http://blog.csdn.net/qq_30242609/article/details/54581674 // Scrapy请求头文件教程
+3.http://blog.csdn.net/qq_30242609/article/details/54581674 // Scrapy shell 如何cookies,headers请求
+4.http://blog.csdn.net/peihaozhu/article/details/53022236   // Scrapy中关于Export Unicode字符集问题解决
+5.https://github.com/wly2014/ImageSpider/blob/master/ImgInWebsite/spiders/ImgSpider.py // scrapy迭代
+6.http://blog.csdn.net/u011781521/article/details/70194744  // Scrapy 代理池的设置
+7.http://cuiqingcai.com/4048.html // 小白进阶之Scrapy第三篇（基于Scrapy-Redis的分布式以及cookies池）
 """
 
 class Spider(CrawlSpider):
